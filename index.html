@@ -82,7 +82,7 @@
                     <div class="publication-links">
                          <!-- Arxiv PDF link -->
                       <span class="link-block">
-                        <a href="https://arxiv.org/abs/2502.12143" target="_blank"
+                        <a href="" target="_blank"
                         class="external-link button is-normal is-rounded is-dark">
                         <span class="icon">
                           <i class="fas fa-file-pdf"></i>
@@ -91,14 +91,11 @@
                       </a>
                     </span>
 
-                    <!-- Project page link -->
                     <span class="link-block">
-                      <a href="https://temporal-forgetting.github.io/Temporal_Forgetting/" target="_blank"
+                      <a href="" target="_blank"
                       class="external-link button is-normal is-rounded is-dark">
-                      <span class="icon">
-                        <i class="fas fa-globe"></i>
-                      </span>
-                      <span>Project Page</span>
+                      <span class="icon" role="img" aria-label="hugging face">🤗</span>
+                      <span>Huggingface</span>
                     </a>
                   </span>
 
@@ -115,7 +112,7 @@
 
                 <!-- ArXiv abstract Link -->
                 <span class="link-block">
-                  <a href="https://arxiv.org/pdf/2502.12143" target="_blank"
+                  <a href="" target="_blank"
                   class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                     <i class="ai ai-arxiv"></i>
@@ -139,7 +136,7 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            Fine-tuning large language models (LLMs) is intended to improve their reasoning capabilities, yet we uncover a counterintuitive effect: models often forget how to solve problems they previously answered correctly during training. We term this phenomenon <strong>Temporal Forgetting</strong> and show that it is widespread across model sizes, fine-tuning methods (both Reinforcement Learning and Supervised Fine-Tuning), and multiple reasoning benchmarks. We find that from 6.4% to 56.1% of final errors were once solved correctly at an earlier checkpoint.
+            Fine-tuning large language models (LLMs) is intended to improve their reasoning capabilities, yet we uncover a counterintuitive effect: models often forget how to solve problems they previously answered correctly during training. We term this phenomenon <strong>Temporal Forgetting</strong> and show that it is widespread across model sizes, fine-tuning methods (both Reinforcement Learning and Supervised Fine-Tuning), and multiple reasoning benchmarks. Our analysis reveals that 6.4% to 56.1% of final errors were once solved correctly at an earlier checkpoint. 
           </p>
           <p>
             Inspired by the phenomenon of Temporal Forgetting, we proposed <strong>Temporal Sampling</strong>, a simple decoding strategy that draws outputs from multiple checkpoints along the training trajectory. This approach recovers forgotten solutions without retraining or ensembling, and leads to significant improvements in reasoning performance, gains from 4 to 19 points in Pass@k and consistent gains for majority-voting and Best-of-N across several benchmarks. To make Temporal Sampling deployment-friendly, we extend it to LoRA-adapted models. By leveraging the temporal diversity inherent in training, Temporal Sampling offers a practical, compute-efficient way to surface hidden reasoning ability and rethink how we evaluate LLMs.
@@ -183,10 +180,10 @@
       <h3 class="subtitle is-4">Takeaway 1: Overall Performance Score Cannot Tell Everything</h3>
       <div class="content">
         <p>
-          In spite of the improvement of overall performance, a considerable percentage of questions (from 6.1% to 16%) answered correctly by the base model may be answered incorrectly after RL/SFT.
+          In spite of the improvement of overall performance, a considerable percentage of questions answered correctly by the base model may be answered incorrectly after RL/SFT.
         </p>
         <figure class="image" style="margin: 1rem 0;">
-          <img src="static/images/overall_performance.jpg" alt="Overall Performance Analysis">
+          <img src="static/images/takeaway_1_1.jpg" alt="Overall Performance Analysis">
         </figure>
         <p>
           Fine-tuned models like DeepscaleR-1.5B and OpenR1-7B outperform the base model overall but also forget many questions the base model answered correctly. This highlights that overall performance metrics cannot capture the nuanced changes happening during training.
@@ -202,10 +199,16 @@
           Benchmark questions may oscillate between correct and incorrect states across checkpoints during RL/SFT. A considerable percentage of questions (from 6.4% to 56.1%) are answered correctly at some checkpoint during training but are ultimately incorrect in the final checkpoint.
         </p>
         <figure class="image" style="margin: 1rem 0;">
-          <img src="static/images/forgetting_dynamics.jpg" alt="Forgetting Dynamics">
+          <img src="static/images/takeaway_2_1.jpg" alt="Forgetting Dynamics">
         </figure>
         <p>
           Answer correctness trajectories for OlympiadBench questions across training checkpoints, illustrating solutions oscillate between correct and incorrect states. The percentage of questions per benchmark that are ever forgotten or ever correct at some checkpoint during GRPO shows significant temporal dynamics.
+        </p>
+        <figure class="image" style="margin: 1rem 0;">
+          <img src="static/images/takeaway_2_2.jpg" alt="Forgetting Dynamics">
+        </figure>
+        <p>
+          Performance of fine-tuned models (P<sub>FT</sub> ↑), the Ever Correct Score (P<sub>ECS</sub> ↑), and the Temporal Forgetting Score (P<sub>TFS</sub> ↓) of different models after GRPO or SFT. We observed both high P<sub>ECS</sub> and P<sub>TFS</sub>, which implies a high percentage of questions (from 6.4\% to 56.1\%) are answered correctly at some checkpoint during training but are ultimately incorrect in the final checkpoint.
         </p>
       </div>
     </div>
@@ -218,7 +221,7 @@
           Temporal Sampling has higher pass rates than sampling only on the final checkpoint.
         </p>
         <figure class="image" style="margin: 1rem 0;">
-          <img src="static/images/pass_at_k.jpg" alt="Pass@k Performance">
+          <img src="static/images/takeaway_3.jpg" alt="Pass@k Performance">
         </figure>
         <p>
           Pass@k for different numbers of checkpoints t on the AIME2024, AMC, and AIME2025 benchmarks. Our proposed Temporal Sampling for Qwen2.5-7B with t = 8 outperforms the baseline by more than 19, 13, and 4 percentage points on AIME2024, AMC, and AIME2025, respectively, when sampling 64 responses.
@@ -234,7 +237,10 @@
           Temporal Sampling has better test-time scaling performance than sampling only on the final checkpoint.
         </p>
         <figure class="image" style="margin: 1rem 0;">
-          <img src="static/images/majority_voting.jpg" alt="Majority Voting Performance">
+          <img src="static/images/takeaway_4_1.jpg" alt="Majority Voting Performance">
+        </figure>
+        <figure class="image" style="margin: 1rem 0;">
+          <img src="static/images/takeaway_4_2.jpg" alt="Majority Voting Performance">
         </figure>
         <p>
           Maj@k (Majority voting) and Best-of-N results show that Temporal Sampling with t = 8 checkpoints significantly outperforms the baseline across multiple benchmarks. This demonstrates the effectiveness of leveraging temporal diversity for various inference-time scaling approaches.
@@ -244,13 +250,13 @@
 
     <!-- Takeaway 5 -->
     <div class="box">
-      <h3 class="subtitle is-4">Takeaway 5: Deployment-Friendly with LoRA</h3>
+      <h3 class="subtitle is-4">Takeaway 5: Temporal Sampling with LoRA</h3>
       <div class="content">
         <p>
-          Temporal Sampling can be efficiently implemented using LoRA-adapted models, reducing storage requirements while maintaining performance gains.
+          Temporal Sampling can be efficiently implemented using LoRA-adapted models, reducing storage requirements while improving performance gains.
         </p>
         <figure class="image" style="margin: 1rem 0;">
-          <img src="static/images/lora_performance.jpg" alt="LoRA Performance">
+          <img src="static/images/takeaway_5.jpg" alt="LoRA Performance">
         </figure>
         <p>
           Performance of Temporal Sampling using 8 checkpoints from LoRA SFT of Qwen2.5-7B. Results demonstrate that Temporal Sampling with LoRA checkpoints surpasses the baseline (sampling only from the final checkpoint) for both Pass@k and Maj@k, making it more storage-efficient for deployment.
@@ -261,28 +267,10 @@
   </div>
 </section>
 
-<!-- Temporal Sampling Section -->
-<section class="section">
-  <div class="container is-max-desktop">
-    <div class="has-text-centered">
-      <h2 class="title is-3">Temporal Sampling Method</h2>
-    </div>
-    <div class="content">
-      <p>
-        Inspired by the observed learning and forgetting dynamics during model training, we propose <strong>Temporal Sampling</strong>. Instead of relying solely on the final checkpoint, k samples are generated by allocating the sampling budget across t distinct training checkpoints according to a chosen distribution strategy.
-      </p>
-      <p>
-        This approach utilizes the evolving state of the model across different training checkpoints as a source of diversity for answer generation at inference time. By spreading the sample budget across time, Temporal Sampling recovers forgotten solutions without retraining or ensembling.
-      </p>
-      <p>
-        We introduce a new metric, <strong>Pass@k|t</strong>, defined as the probability of obtaining at least one correct answer when k samples are drawn from t checkpoints. Our experiments show substantial improvements across diverse reasoning tasks, with gains from 4 to 19 points in Pass@k compared to final-checkpoint-only sampling.
-      </p>
-    </div>
-  </div>
-</section>
+
 
 <!--BibTex citation -->
-  <section class="section" id="BibTeX">
+  <!-- <section class="section" id="BibTeX">
     <div class="container is-max-desktop content">
       <h2 class="title">BibTeX</h2>
       <p>
@@ -297,7 +285,7 @@
         }
     </code></pre>
     </div>
-</section>
+</section> -->
 <!--End BibTex citation -->
 
 <footer class="footer">
